@@ -20,7 +20,7 @@ async function extractJiraIssues() {
       const issues = [];
       commits.forEach(item => {
         const { message } = item.commit;
-        const matchedIssues = message.match(jiraRegex).toArray();
+        const matchedIssues = message.match(jiraRegex);
 
         if (matchedIssues?.length) {
           matchedIssues.forEach(matchedIssue => {
