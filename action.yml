@@ -1,5 +1,5 @@
 name: 'Extract JIRA issues from hostpry'
-description: 'Update pr description asynchronous with a timeout, to avoid two updates at the same time'
+description: 'Extract JIRA issues e.g. ABC-123'
 inputs:
   token:
     description: 'the git token'
