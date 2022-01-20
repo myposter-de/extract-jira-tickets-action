@@ -1,0 +1,9 @@
+name: 'Extract JIRA issues from hostpry'
+description: 'Update pr description asynchronous with a timeout, to avoid two updates at the same time'
+inputs:
+  token:
+    description: 'the git token'
+    required: true
+runs:
+  using: 'node16'
+  main: 'dist/index.js'
