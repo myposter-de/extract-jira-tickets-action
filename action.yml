@@ -1,4 +1,4 @@
-name: 'Extract JIRA issues from hostpry'
+name: 'Extract JIRA issues from history'
 description: 'Extract JIRA issues e.g. ABC-123'
 inputs:
   token:
