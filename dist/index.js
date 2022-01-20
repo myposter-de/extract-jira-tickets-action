@@ -8552,14 +8552,16 @@ async function extractJiraIssues() {
     if (commits) {
       const issues = [];
       commits.forEach(item => {
-        const { commit } = item;
-        const matchedIssues = commit.matchAll(jiraRegex).toArray();
+        const { message } = item.commit;
+        const matchedIssues = message.match(jiraRegex).toArray();
 
-        matchedIssues.forEach(matchedIssue => {
-          if (!issues.find(issue => issue === matchedIssue)) {
-            issues.push(matchedIssue);
-          }
-        });
+        if (matchedIssues?.length) {
+          matchedIssues.forEach(matchedIssue => {
+            if (!issues.find(issue => issue === matchedIssue)) {
+              issues.push(matchedIssue);
+            }
+          });
+        }
       });
       if (issues) {
         const linkedIssues = issues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
