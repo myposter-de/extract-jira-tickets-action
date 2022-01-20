@@ -4,6 +4,9 @@ inputs:
   token:
     description: 'the git token'
     required: true
+outputs:
+  issues:
+    description: 'The issues as links'
 runs:
   using: 'node16'
   main: 'dist/index.js'
