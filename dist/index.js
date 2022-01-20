@@ -8549,15 +8549,27 @@ async function extractJiraIssues() {
       repo: context.repo.repo,
     });
 
-    const issues = commits.match(jiraRegex);
+    if (commits) {
+      const issues = [];
+      commits.forEach(item => {
+        const { commit } = item;
+        const matchedIssues = commit.matchAll(jiraRegex).toArray();
 
-    if (issues) {
-      let uniqueIssues = issues.filter((val, index, arr) => arr.indexOf(val) === index);
-      uniqueIssues = uniqueIssues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
+        matchedIssues.forEach(matchedIssue => {
+          if (!issues.find(issue => issue === matchedIssue)) {
+            issues.push(matchedIssue);
+          }
+        });
+      });
+      if (issues) {
+        const linkedIssues = issues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
 
-      const output = uniqueIssues.join(' ');
+        const output = linkedIssues.join(' ');
 
-      core.setOutput(OUTPUT_KEY, output);
+        core.setOutput(OUTPUT_KEY, output);
+      } else {
+        core.setOutput(OUTPUT_KEY, '');
+      }
     } else {
       core.setOutput(OUTPUT_KEY, '');
     }
