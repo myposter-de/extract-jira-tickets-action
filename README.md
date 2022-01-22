@@ -3,7 +3,7 @@
 ## usecase
 Extract JIRA issues from git history (only pull request commits). Why no action from marketplace? We'd like to map the keys to our JIRA board url.
 
-##usage
+## usage
 ```yaml
       - name: 🎟️ detect tickets
         uses: myposter-de/extract-jira-tickets-action@master
