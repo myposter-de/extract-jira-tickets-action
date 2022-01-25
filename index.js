@@ -33,7 +33,7 @@ async function extractJiraIssues() {
       if (issues) {
         const linkedIssues = issues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
 
-        const output = linkedIssues.join(' ');
+        const output = linkedIssues.join('\n').replace('\\n', '\n');
 
         core.setOutput(OUTPUT_KEY, output);
       } else {
