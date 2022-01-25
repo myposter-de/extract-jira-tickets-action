@@ -12,7 +12,7 @@ async function extractJiraIssues() {
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
 
     const { data: commits } = await octokit.rest.pulls.listCommits({
-      pull_number: prNumber,
+      pull_number: prNumber || context.payload.issue.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
     });
