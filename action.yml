@@ -6,7 +6,8 @@ inputs:
     required: true
   pullRequestNumber:
     description: 'The PR number'
-    required: true
+    required: false
+    default: ''
 
 outputs:
   issues:
