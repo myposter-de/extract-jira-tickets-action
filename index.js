@@ -61,7 +61,7 @@ async function extractJiraIssues() {
           return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
         }));
 
-        const output = linkedIssues.join('\n').replace('\\n', '\n');
+        const output = linkedIssues.join(' '); //.replace('\\n', '\n');
 
         core.setOutput(OUTPUT_KEY, output);
       } else {
