@@ -54,11 +54,11 @@ async function extractJiraIssues() {
         }
       });
       if (issues) {
-        const linkedIssues = issues.map(async (issue) => {
+        const linkedIssues = await Promise.all(issues.map(async (issue) => {
           const description = await getIssueDescription(issue);
 
           return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
-        });
+        }));
 
         const output = linkedIssues.join('\n').replace('\\n', '\n');
 
