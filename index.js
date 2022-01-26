@@ -6,13 +6,15 @@ const JiraApi = require('jira-client');
 
 let jira;
 
+const INVALID_TICKET = 'invalid';
+
 const getIssueDescription = async (issueNumber) => {
   try {
     const ticket = await jira.findIssue(issueNumber);
     console.log(ticket);
     return ticket.fields.summary;
   } catch (e) {
-    return 'ticket existiert nicht';
+    return INVALID_TICKET;
   }
 }
 
@@ -58,6 +60,10 @@ async function extractJiraIssues() {
       if (issues) {
         const linkedIssues = await Promise.all(issues.map(async (issue) => {
           const description = await getIssueDescription(issue);
+
+          if (description === INVALID_TICKET) {
+            return `${issue} existiert nicht`;
+          }
 
           return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
         }));
