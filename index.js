@@ -12,38 +12,38 @@ async function extractJiraIssues() {
 
     console.log(context);
 
-    // const { data: commits } = await octokit.rest.pulls.listCommits({
-    //   pull_number: context.payload.number,
-    //   owner: context.repo.owner,
-    //   repo: context.repo.repo,
-    // });
+    const { data: commits } = await octokit.rest.pulls.listCommits({
+      pull_number: context.payload.number,
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+    });
 
-    // if (commits) {
-    //   const issues = [];
-    //   commits.forEach(item => {
-    //     const { message } = item.commit;
-    //     const matchedIssues = message.match(jiraRegex);
-    //
-    //     if (matchedIssues?.length) {
-    //       matchedIssues.forEach(matchedIssue => {
-    //         if (!issues.find(issue => issue === matchedIssue)) {
-    //           issues.push(matchedIssue);
-    //         }
-    //       });
-    //     }
-    //   });
-    //   if (issues) {
-    //     const linkedIssues = issues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
-    //
-    //     const output = linkedIssues.join('\n').replace('\\n', '\n');
-    //
-    //     core.setOutput(OUTPUT_KEY, output);
-    //   } else {
-    //     core.setOutput(OUTPUT_KEY, '');
-    //   }
-    // } else {
-    //   core.setOutput(OUTPUT_KEY, '');
-    // }
+    if (commits) {
+      const issues = [];
+      commits.forEach(item => {
+        const { message } = item.commit;
+        const matchedIssues = message.match(jiraRegex);
+
+        if (matchedIssues?.length) {
+          matchedIssues.forEach(matchedIssue => {
+            if (!issues.find(issue => issue === matchedIssue)) {
+              issues.push(matchedIssue);
+            }
+          });
+        }
+      });
+      if (issues) {
+        const linkedIssues = issues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
+
+        const output = linkedIssues.join('\n').replace('\\n', '\n');
+
+        core.setOutput(OUTPUT_KEY, output);
+      } else {
+        core.setOutput(OUTPUT_KEY, '');
+      }
+    } else {
+      core.setOutput(OUTPUT_KEY, '');
+    }
 
   } catch (error) {
     core.setFailed(error.message);

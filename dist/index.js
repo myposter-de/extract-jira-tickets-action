@@ -8543,8 +8543,10 @@ async function extractJiraIssues() {
     const { context } = github;
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
 
+    console.log(context);
+
     const { data: commits } = await octokit.rest.pulls.listCommits({
-      pull_number: context.payload.pull_request.number,
+      pull_number: context.payload.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
     });
@@ -8566,7 +8568,7 @@ async function extractJiraIssues() {
       if (issues) {
         const linkedIssues = issues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
 
-        const output = linkedIssues.join(' ');
+        const output = linkedIssues.join('\n').replace('\\n', '\n');
 
         core.setOutput(OUTPUT_KEY, output);
       } else {
