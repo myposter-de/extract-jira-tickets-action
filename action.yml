@@ -11,6 +11,9 @@ inputs:
     description: 'The PR number'
     required: false
     default: ''
+  jiraUsername:
+    description: 'The jira username *@myposter.de'
+    required: true
 
 outputs:
   issues:

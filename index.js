@@ -23,6 +23,7 @@ async function extractJiraIssues() {
     const OUTPUT_KEY = 'issues';
     const token = core.getInput('token');
     const jiraToken = core.getInput('jiraToken');
+    const jiraUsername = core.getInput('jiraUsername');
     const prNumber = core.getInput('pullRequestNumber');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
@@ -31,7 +32,7 @@ async function extractJiraIssues() {
     jira = new JiraApi({
       protocol: 'https',
       host: 'myposter.atlassian.net',
-      username: 'martin.berchtold@myposter.de',
+      username: jiraUsername,
       password: jiraToken,
     });
 
