@@ -61367,7 +61367,7 @@ const INVALID_TICKET = 'invalid';
 const getIssueDescription = async (issueNumber) => {
   try {
     const ticket = await jira.findIssue(issueNumber);
-    console.log(ticket);
+
     return ticket.fields.summary;
   } catch (e) {
     return INVALID_TICKET;
@@ -61400,11 +61400,11 @@ async function extractJiraIssues() {
 
     if (commits) {
       const issues = [];
-      console.log('commitcount', commits.length);
+
       commits.forEach(item => {
         const { message } = item.commit;
         const matchedIssues = message.match(jiraRegex);
-        console.log('message', message);
+
         if (matchedIssues?.length) {
           matchedIssues.forEach(matchedIssue => {
             if (!issues.find(issue => issue === matchedIssue)) {
