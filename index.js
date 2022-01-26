@@ -6,6 +6,7 @@ async function extractJiraIssues() {
   try {
     const OUTPUT_KEY = 'issues';
     const token = core.getInput('token');
+    const prNumber = core.getInput('pullRequestNumber');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
@@ -13,7 +14,7 @@ async function extractJiraIssues() {
     console.log(context);
 
     const { data: commits } = await octokit.rest.pulls.listCommits({
-      pull_number: context.payload.number,
+      pull_number: prNumber || context.payload.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
     });

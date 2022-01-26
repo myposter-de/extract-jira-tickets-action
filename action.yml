@@ -4,6 +4,10 @@ inputs:
   token:
     description: 'the git token'
     required: true
+  pullRequestNumber:
+    description: 'The PR number'
+    required: false
+    default: ''
 
 outputs:
   issues:
