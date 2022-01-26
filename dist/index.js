@@ -61366,9 +61366,9 @@ const getIssueDescription = async (issueNumber) => {
   try {
     const ticket = await jira.findIssue(issueNumber);
     console.log(ticket);
-    return ticket?.fields?.summary;
+    return ticket.fields.summary;
   } catch (e) {
-    return Promise.resolve('ticket existiert nicht');
+    return 'ticket existiert nicht';
   }
 }
 
@@ -61410,8 +61410,8 @@ async function extractJiraIssues() {
         }
       });
       if (issues) {
-        const linkedIssues = issues.map((issue) => {
-          const description = getIssueDescription(issue);
+        const linkedIssues = issues.map(async (issue) => {
+          const description = await getIssueDescription(issue);
 
           return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
         });
