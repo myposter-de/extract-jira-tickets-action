@@ -61410,8 +61410,8 @@ async function extractJiraIssues() {
         }
       });
       if (issues) {
-        const linkedIssues = issues.map(async (issue) => {
-          const description = await getIssueDescription(issue);
+        const linkedIssues = issues.map((issue) => {
+          const description = getIssueDescription(issue);
 
           return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
         });
