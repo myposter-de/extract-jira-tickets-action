@@ -2,10 +2,13 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { Octokit } = require('@octokit/rest');
 
+const { getIssueDescription } = require('src/jira-api');
+
 async function extractJiraIssues() {
   try {
     const OUTPUT_KEY = 'issues';
     const token = core.getInput('token');
+    const jiraToken = core.getInput('jiraToken');
     const prNumber = core.getInput('pullRequestNumber');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
@@ -14,7 +17,7 @@ async function extractJiraIssues() {
     console.log(context);
 
     const { data: commits } = await octokit.rest.pulls.listCommits({
-      pull_number: prNumber || context.payload.number,
+      pull_number: prNumber || context.issue.number,
       owner: context.repo.owner,
       repo: context.repo.repo,
     });
@@ -34,7 +37,10 @@ async function extractJiraIssues() {
         }
       });
       if (issues) {
-        const linkedIssues = issues.map(issue => `<https://myposter.atlassian.net/browse/${issue}|${issue}>`)
+        const linkedIssues = issues.map(issue => {
+          const description = getIssueDescription(issue, jiraToken);
+          `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
+        });
 
         const output = linkedIssues.join('\n').replace('\\n', '\n');
 

@@ -4,6 +4,9 @@ inputs:
   token:
     description: 'the git token'
     required: true
+  jiraToken:
+    description: 'JIRA api key'
+    required: true
   pullRequestNumber:
     description: 'The PR number'
     required: false
