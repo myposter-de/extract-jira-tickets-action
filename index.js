@@ -12,7 +12,7 @@ const getIssueDescription = async (issueNumber) => {
     console.log(ticket);
     return ticket?.fields?.summary;
   } catch (e) {
-    return 'ticket existiert nicht';
+    return Promise.resolve('ticket existiert nicht');
   }
 }
 
@@ -44,7 +44,7 @@ async function extractJiraIssues() {
       commits.forEach(item => {
         const { message } = item.commit;
         const matchedIssues = message.match(jiraRegex);
-
+        console.log('message', message);
         if (matchedIssues?.length) {
           matchedIssues.forEach(matchedIssue => {
             if (!issues.find(issue => issue === matchedIssue)) {
