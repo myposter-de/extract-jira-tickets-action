@@ -9,7 +9,7 @@ let jira;
 const getIssueDescription = async (issueNumber) => {
   try {
     const ticket = await jira.findIssue(issueNumber);
-
+    console.log(ticket);
     return ticket?.fields?.summary;
   } catch (e) {
     return 'ticket existiert nicht';
@@ -25,8 +25,6 @@ async function extractJiraIssues() {
     const octokit = new Octokit({ auth: token });
     const { context } = github;
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
-
-    console.log(context);
 
     jira = new JiraApi({
       protocol: 'https',
