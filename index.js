@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const { Octokit } = require('@octokit/rest');
 
-const { getIssueDescription } = require('src/jira-api');
+import { getIssueDescription } from 'src/jira-api';
 
 async function extractJiraIssues() {
   try {

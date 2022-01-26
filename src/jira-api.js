@@ -13,7 +13,7 @@ const getIssueDescription = async (issueNumber, token) => {
    }
    const ticket = await jira.findIssue(issueNumber);
 
-   return ticket.fields.summary;
+   return ticket?.fields?.summary || 'ticket does not exist';
 }
 
-module.exports = { getIssueDescription };
+export { getIssueDescription };
