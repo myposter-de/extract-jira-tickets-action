@@ -61390,7 +61390,7 @@ async function extractJiraIssues() {
     });
 
     const { data: commits } = await octokit.rest.pulls.listCommits({
-      pull_number: prNumber || context.issue.number,
+      pull_number: prNumber.toString(),
       owner: context.repo.owner,
       repo: context.repo.repo,
     });
