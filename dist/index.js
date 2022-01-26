@@ -61397,6 +61397,7 @@ async function extractJiraIssues() {
 
     if (commits) {
       const issues = [];
+      console.log('commitcount', commits.length);
       commits.forEach(item => {
         const { message } = item.commit;
         const matchedIssues = message.match(jiraRegex);
