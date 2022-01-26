@@ -61414,7 +61414,8 @@ async function extractJiraIssues() {
       if (issues) {
         const linkedIssues = issues.map(issue => {
           const description = getIssueDescription(issue);
-          `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
+
+          return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
         });
 
         const output = linkedIssues.join('\n').replace('\\n', '\n');
