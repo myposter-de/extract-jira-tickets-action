@@ -7,9 +7,13 @@ const JiraApi = require('jira-client');
 let jira;
 
 const getIssueDescription = async (issueNumber) => {
-  const ticket = await jira.findIssue(issueNumber);
+  try {
+    const ticket = await jira.findIssue(issueNumber);
 
-  return ticket?.fields?.summary || 'ticket does not exist';
+    return ticket?.fields?.summary;
+  } catch (e) {
+    return 'ticket existiert nicht';
+  }
 }
 
 async function extractJiraIssues() {
