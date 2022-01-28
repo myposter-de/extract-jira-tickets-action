@@ -73,10 +73,10 @@ async function extractJiraIssues() {
 
         core.setOutput(OUTPUT_KEY, output);
       } else {
-        core.setOutput(OUTPUT_KEY, '');
+        core.setOutput(OUTPUT_KEY, 'no tickets found');
       }
     } else {
-      core.setOutput(OUTPUT_KEY, '');
+      core.setOutput(OUTPUT_KEY, 'no tickets found');
     }
 
   } catch (error) {
