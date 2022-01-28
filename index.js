@@ -56,8 +56,8 @@ async function extractJiraIssues() {
         per_page: 100,
         basehead: 'develop...master'
       });
-      console.log(commitsCompareBranch);
-      commits = commitsCompareBranch;
+      console.log(commitsCompareBranch.commits);
+      commits = commitsCompareBranch.commits;
     }
 
 
