@@ -50,7 +50,7 @@ async function extractJiraIssues() {
 
       commits = commitsPulls;
     } else {
-      const { payload: commitsCompareBranch } = await octokit.rest.repos.compareCommitsWithBasehead({
+      const { data: commitsCompareBranch } = await octokit.rest.repos.compareCommitsWithBasehead({
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100,
