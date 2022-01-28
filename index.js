@@ -17,9 +17,9 @@ const getIssueDescription = async (issueNumber) => {
     return INVALID_TICKET;
   }
 }
-
 async function extractJiraIssues() {
   try {
+    console.log('called jira');
     const OUTPUT_KEY = 'issues';
     const token = core.getInput('token');
     const jiraToken = core.getInput('jiraToken');
@@ -29,6 +29,7 @@ async function extractJiraIssues() {
     const octokit = new Octokit({ auth: token });
     const { context } = github;
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
+
 
     jira = new JiraApi({
       protocol: 'https',
