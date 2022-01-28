@@ -14,6 +14,10 @@ inputs:
   jiraUsername:
     description: 'The jira username *@myposter.de'
     required: true
+  isPr:
+    description: 'Is pr closed? Or get commits from develop -> master?'
+    required: false
+    default: false
 
 outputs:
   issues:

@@ -61380,6 +61380,7 @@ async function extractJiraIssues() {
     const token = core.getInput('token');
     const jiraToken = core.getInput('jiraToken');
     const jiraUsername = core.getInput('jiraUsername');
+    const isPr = core.getInput('isPr');
     const prNumber = core.getInput('pullRequestNumber');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
@@ -61392,12 +61393,28 @@ async function extractJiraIssues() {
       password: jiraToken,
     });
 
-    const { data: commits } = await octokit.rest.pulls.listCommits({
-      pull_number: prNumber.toString(),
-      owner: context.repo.owner,
-      repo: context.repo.repo,
-      per_page: 100
-    });
+    let commits;
+
+    if (! isPr) {
+      const { data: commitsPulls } = await octokit.rest.pulls.listCommits({
+        pull_number: prNumber.toString(),
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        per_page: 100
+      });
+
+      commits = commitsPulls;
+    } else {
+      const { data: commitsCompareBranch } = await octokit.rest.repos.compareCommitsWithBasehead({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+        per_page: 100,
+        basehead: 'master...develop'
+      });
+
+      commits = commitsCompareBranch;
+    }
+
 
     if (commits) {
       const issues = [];
