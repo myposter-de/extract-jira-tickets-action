@@ -54,7 +54,7 @@ async function extractJiraIssues() {
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100,
-        basehead: '{develop}...{master}'
+        basehead: 'develop...master'
       });
       console.log(commitsCompareBranch);
       commits = commitsCompareBranch;
