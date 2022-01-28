@@ -61409,7 +61409,7 @@ async function extractJiraIssues() {
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100,
-        basehead: 'master...develop'
+        basehead: '{master}...{develop}'
       });
 
       commits = commitsCompareBranch;
