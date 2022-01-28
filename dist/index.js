@@ -61410,7 +61410,7 @@ async function extractJiraIssues() {
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100,
-        basehead: '{master}...{develop}'
+        basehead: '{develop}...{master}'
       });
       console.log(commitsCompareBranch);
       commits = commitsCompareBranch;
@@ -61454,6 +61454,7 @@ async function extractJiraIssues() {
     }
 
   } catch (error) {
+    console.log('error');
     core.setFailed(error.message);
   }
 }
