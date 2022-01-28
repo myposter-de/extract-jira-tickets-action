@@ -61429,10 +61429,10 @@ async function extractJiraIssues() {
 
         core.setOutput(OUTPUT_KEY, output);
       } else {
-        core.setOutput(OUTPUT_KEY, '');
+        core.setOutput(OUTPUT_KEY, 'false');
       }
     } else {
-      core.setOutput(OUTPUT_KEY, '');
+      core.setOutput(OUTPUT_KEY, 'false');
     }
 
   } catch (error) {
