@@ -48,6 +48,8 @@ async function extractJiraIssues() {
         per_page: 100
       });
 
+      console.log('pull', commitsPulls);
+
       commits = commitsPulls;
     } else {
       const { data: commitsCompareBranch } = await octokit.rest.repos.compareCommitsWithBasehead({
