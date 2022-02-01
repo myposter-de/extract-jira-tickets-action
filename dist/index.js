@@ -61396,7 +61396,7 @@ async function extractJiraIssues() {
 
     let commits;
 
-    if (! isPr) {
+    if (!!isPr) {
       console.log('rest.pulls.listCommits with number ', prNumber);
       const { data: commitsPulls } = await octokit.rest.pulls.listCommits({
         pull_number: prNumber,
