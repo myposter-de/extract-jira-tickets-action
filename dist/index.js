@@ -61381,7 +61381,7 @@ async function extractJiraIssues() {
     const jiraToken = core.getInput('jiraToken');
     const jiraUsername = core.getInput('jiraUsername');
     const prNumber = core.getInput('pullRequestNumber');
-    const latestTag = core.getInput('latestTag');
+    const compareToLatestTag = core.getInput('latestTag');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
@@ -61396,7 +61396,7 @@ async function extractJiraIssues() {
 
     let commits;
 
-    if (latestTag === '') {
+    if (compareToLatestTag === 'false') {
       console.log('rest.pulls.listCommits with number ', prNumber);
       const { data: commitsPulls } = await octokit.rest.pulls.listCommits({
         pull_number: prNumber,
@@ -61410,11 +61410,24 @@ async function extractJiraIssues() {
       commits = commitsPulls;
     } else {
       console.log('compare branches');
+
+      const { data: tags } = await octokit.rest.repos.listTags({
+        owner: context.repo.owner,
+        repo: context.repo.repo,
+      });
+
+      const latestTagToUse = tags[0]?.name;
+
+      if (!latestTagToUse) {
+        core.setFailed('could not find latestTag');
+        return;
+      }
+
       const { data: commitsCompareBranch } = await octokit.rest.repos.compareCommitsWithBasehead({
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100,
-        basehead: latestTag !== '' ? `${latestTag}..HEAD` : 'develop...master'
+        basehead: compareToLatestTag !== '' ? `${latestTagToUse}..HEAD` : 'develop...master'
       });
       console.log(commitsCompareBranch.commits);
       commits = commitsCompareBranch.commits;

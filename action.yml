@@ -21,7 +21,7 @@ inputs:
   latestTag:
     description: 'if set, get diff between latest tag and head'
     required: false
-    default: ''
+    default: 'false'
 
 outputs:
   issues:
