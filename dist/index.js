@@ -61380,7 +61380,6 @@ async function extractJiraIssues() {
     const token = core.getInput('token');
     const jiraToken = core.getInput('jiraToken');
     const jiraUsername = core.getInput('jiraUsername');
-    const isPr = !!core.getInput('isPr');
     const prNumber = core.getInput('pullRequestNumber');
     const latestTag = core.getInput('latestTag');
     const octokit = new Octokit({ auth: token });
@@ -61397,7 +61396,7 @@ async function extractJiraIssues() {
 
     let commits;
 
-    if (! isPr) {
+    if (latestTag === '') {
       console.log('rest.pulls.listCommits with number ', prNumber);
       const { data: commitsPulls } = await octokit.rest.pulls.listCommits({
         pull_number: prNumber,
