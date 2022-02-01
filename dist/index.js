@@ -61415,7 +61415,7 @@ async function extractJiraIssues() {
         owner: context.repo.owner,
         repo: context.repo.repo,
       });
-
+      console.log('tags found: ', tags);
       const latestTagToUse = tags[0]?.name;
 
       if (!latestTagToUse) {
