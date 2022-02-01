@@ -40,6 +40,8 @@ async function extractJiraIssues() {
 
     let commits;
 
+    console.log('context.repo', context.repo);
+
     if (compareToLatestTag === 'false') {
       console.log('rest.pulls.listCommits with number ', prNumber);
       const { data: commitsPulls } = await octokit.rest.pulls.listCommits({
