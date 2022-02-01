@@ -24,7 +24,7 @@ async function extractJiraIssues() {
     const token = core.getInput('token');
     const jiraToken = core.getInput('jiraToken');
     const jiraUsername = core.getInput('jiraUsername');
-    const isPr = core.getInput('isPr');
+    const isPr = !!core.getInput('isPr');
     const prNumber = core.getInput('pullRequestNumber');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
@@ -40,7 +40,7 @@ async function extractJiraIssues() {
 
     let commits;
 
-    if (isPr === 'false') {
+    if (! isPr) {
       console.log('rest.pulls.listCommits with number ', prNumber);
       const { data: commitsPulls } = await octokit.rest.pulls.listCommits({
         pull_number: prNumber,
