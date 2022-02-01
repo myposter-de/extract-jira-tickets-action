@@ -26,6 +26,7 @@ async function extractJiraIssues() {
     const jiraUsername = core.getInput('jiraUsername');
     const isPr = !!core.getInput('isPr');
     const prNumber = core.getInput('pullRequestNumber');
+    const latestTag = core.getInput('latestTag');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
@@ -58,7 +59,7 @@ async function extractJiraIssues() {
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100,
-        basehead: 'develop...master'
+        basehead: latestTag !== '' ? `${latestTag}...HEAD` : 'develop...master'
       });
       console.log(commitsCompareBranch.commits);
       commits = commitsCompareBranch.commits;
