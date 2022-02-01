@@ -41,8 +41,9 @@ async function extractJiraIssues() {
     let commits;
 
     if (! isPr) {
+      console.log('rest.pulls.listCommits with number ', prNumber);
       const { data: commitsPulls } = await octokit.rest.pulls.listCommits({
-        pull_number: prNumber.toString(),
+        pull_number: prNumber,
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100
@@ -52,6 +53,7 @@ async function extractJiraIssues() {
 
       commits = commitsPulls;
     } else {
+      console.log('compare branches');
       const { data: commitsCompareBranch } = await octokit.rest.repos.compareCommitsWithBasehead({
         owner: context.repo.owner,
         repo: context.repo.repo,
