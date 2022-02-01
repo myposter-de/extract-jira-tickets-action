@@ -108,7 +108,11 @@ async function extractJiraIssues() {
 
         const output = linkedIssues.join('\n').replace('\\n', '\n');
 
-        core.setOutput(OUTPUT_KEY, output ?? 'false');
+        if (output) {
+          core.setOutput(OUTPUT_KEY, output);
+        } else {
+          core.setOutput(OUTPUT_KEY, 'false');
+        }
       } else {
         core.setOutput(OUTPUT_KEY, 'false');
       }
