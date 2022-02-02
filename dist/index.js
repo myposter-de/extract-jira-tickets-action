@@ -61462,12 +61462,14 @@ async function extractJiraIssues() {
           return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
         }));
 
-        const output = linkedIssues.join('\n').replace('\\n', '\n');
+        if (linkedIssues?.length) {
+          const output = linkedIssues.join('\n').replace('\\n', '\n');
 
-        if (output) {
-          core.setOutput(OUTPUT_KEY, output);
-        } else {
-          core.setOutput(OUTPUT_KEY, '');
+          if (output && output !== '\n') {
+            core.setOutput(OUTPUT_KEY, output);
+          } else {
+            core.setOutput(OUTPUT_KEY, '');
+          }
         }
       } else {
         core.setOutput(OUTPUT_KEY, '');
