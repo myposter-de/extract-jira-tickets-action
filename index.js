@@ -73,7 +73,7 @@ async function extractJiraIssues() {
         owner: context.repo.owner,
         repo: context.repo.repo,
         per_page: 100,
-        basehead: compareToLatestTag !== '' ? `${latestTagToUse}..HEAD` : 'develop...master'
+        basehead: compareToLatestTag !== '' ? `${latestTagToUse}...HEAD` : 'develop...master'
       });
       console.log(commitsCompareBranch.commits);
       commits = commitsCompareBranch.commits;
