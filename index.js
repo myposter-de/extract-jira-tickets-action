@@ -111,13 +111,13 @@ async function extractJiraIssues() {
         if (output) {
           core.setOutput(OUTPUT_KEY, output);
         } else {
-          core.setOutput(OUTPUT_KEY, 'false');
+          core.setOutput(OUTPUT_KEY, '');
         }
       } else {
-        core.setOutput(OUTPUT_KEY, 'false');
+        core.setOutput(OUTPUT_KEY, '');
       }
     } else {
-      core.setOutput(OUTPUT_KEY, 'false');
+      core.setOutput(OUTPUT_KEY, '');
     }
 
   } catch (error) {
