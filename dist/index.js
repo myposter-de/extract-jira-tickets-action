@@ -61425,12 +61425,8 @@ async function extractJiraIssues() {
         return;
       }
 
-      const { data: commitsCompareBranch } = await octokit.rest.repos.compareCommitsWithBasehead({
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        per_page: 100,
-        basehead: compareToLatestTag !== '' ? `${latestTagToUse}...HEAD` : 'develop...master'
-      });
+      const { data: commitsCompareBranch } = await octokit.request(`GET /repos/${context.repo.owner}/${context.repo.repo}/compare/${latestTagToUse}...HEAD`);
+
       console.log(commitsCompareBranch.commits);
       commits = commitsCompareBranch.commits;
     }
