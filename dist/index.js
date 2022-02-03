@@ -61413,12 +61413,19 @@ async function extractJiraIssues() {
     } else {
       console.log('compare branches');
 
-      const { data: tags } = await octokit.rest.repos.listTags({
+      let { data: tags } = await octokit.rest.repos.listTags({
         owner: context.repo.owner,
         repo: context.repo.repo,
       });
-      console.log('tags found: ', tags);
+      console.log('tags unfiltered found: ', tags);
+
+      tags = tags.filter(tag => tag.name.includes('helm-version'));
+
+      console.log('filtered tags: ', tags);
+
       const latestTagToUse = tags[0]?.name;
+
+      console.log('latestTagToUse: ', latestTagToUse);
 
       if (!latestTagToUse) {
         core.setFailed('could not find latestTag');
@@ -61427,7 +61434,6 @@ async function extractJiraIssues() {
 
       const { data: commitsCompareBranch } = await octokit.request(`GET /repos/${context.repo.owner}/${context.repo.repo}/compare/${latestTagToUse}...HEAD`);
 
-      console.log(commitsCompareBranch.commits);
       commits = commitsCompareBranch.commits;
     }
 
