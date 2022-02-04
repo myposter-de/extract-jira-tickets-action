@@ -61,11 +61,8 @@ async function extractJiraIssues() {
         owner: context.repo.owner,
         repo: context.repo.repo,
       });
-      console.log('tags unfiltered found: ', tags);
 
       tags = tags.filter(tag => tag.name.includes('helm-version'));
-
-      console.log('filtered tags: ', tags);
 
       const latestTagToUse = tags[0]?.name;
 
@@ -81,6 +78,7 @@ async function extractJiraIssues() {
       commits = commitsCompareBranch.commits;
     }
 
+    console.log('commits: ', commits);
 
     if (commits) {
       const issues = [];
@@ -107,6 +105,8 @@ async function extractJiraIssues() {
 
           return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
         }));
+
+        console.log('linkedIssues ', linkedIssues);
 
         if (linkedIssues?.length) {
           const output = linkedIssues.join('\n').replace('\\n', '\n');
