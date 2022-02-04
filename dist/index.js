@@ -61464,10 +61464,10 @@ async function extractJiraIssues() {
 
         console.log('linkedIssues ', linkedIssues);
 
-        if (linkedIssues?.length) {
+        if (linkedIssues?.length && linkedIssues?.length > 0) {
           const output = linkedIssues.join('\n').replace('\\n', '\n');
 
-          if (output && output !== '\n') {
+          if (!!output) {
             core.setOutput(OUTPUT_KEY, output ?? '');
           } else {
             core.setOutput(OUTPUT_KEY, '');
