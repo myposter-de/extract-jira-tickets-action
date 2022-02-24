@@ -26,6 +26,7 @@ async function extractJiraIssues() {
     const jiraUsername = core.getInput('jiraUsername');
     const prNumber = core.getInput('pullRequestNumber');
     const compareToLatestTag = core.getInput('latestTag');
+    const extractForJiraDeployment = core.getInput('extractForJiraDeployment');
     const octokit = new Octokit({ auth: token });
     const { context } = github;
     const jiraRegex = /[A-Z]+(?!-?[a-zA-Z]{1,10})-\d+/g;
@@ -102,14 +103,22 @@ async function extractJiraIssues() {
           if (description === INVALID_TICKET) {
             return `${issue} existiert nicht`;
           }
-
-          return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
+          if (extractForJiraDeployment === 'false') {
+            return `<https://myposter.atlassian.net/browse/${issue}|${issue} ${description}>`
+          } else {
+            return issue;
+          }
         }));
 
         console.log('linkedIssues ', linkedIssues);
 
         if (linkedIssues?.length && linkedIssues?.length > 0) {
-          const output = linkedIssues.join('\n').replace('\\n', '\n');
+          let output;
+          if (extractForJiraDeployment === 'false') {
+            output = linkedIssues.join('\n').replace('\\n', '\n');
+          } else {
+            output = JSON.stringify(linkedIssues);
+          }
           console.log('output', output);
           if (!!output) {
             core.setOutput(OUTPUT_KEY, output ?? '');

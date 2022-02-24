@@ -17,9 +17,13 @@ inputs:
   isPr:
     description: 'Is pr closed? Or get commits from develop -> master?'
     required: false
-    default: false
+    default: 'false'
   latestTag:
     description: 'if set, get diff between latest tag and head'
+    required: false
+    default: 'false'
+  extractForJiraDeployment:
+    description: 'return only issue keys without link'
     required: false
     default: 'false'
 
