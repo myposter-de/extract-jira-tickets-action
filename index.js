@@ -117,7 +117,7 @@ async function extractJiraIssues() {
           if (extractForJiraDeployment === 'false') {
             output = linkedIssues.join('\n').replace('\\n', '\n');
           } else {
-            output = JSON.stringify(linkedIssues);
+            output = linkedIssues.join(',');
           }
           console.log('output', output);
           if (!!output) {
